@@ -1,0 +1,871 @@
+from random import randint
+class logico:
+    def __init__(self):
+
+
+        #bariables
+        self.matriz = []
+        self.sizeM = 10
+        self.pazos=  5
+        self.level=3
+        self.cont = 0
+        for i in range(self.sizeM):
+            self.matriz.append([0] * self.sizeM)
+
+        if self.level==1 or self.level==2:
+            self.Ii = (randint(0, self.sizeM - 1))
+            self.Ij = (randint(0, self.sizeM - 1))
+
+            self.IIi = (randint(0, self.sizeM - 1))
+            self.IIj = (randint(0, self.sizeM - 1))
+
+            self.IIIi = (randint(0, self.sizeM - 1))
+            self.IIIj = (randint(0, self.sizeM - 1))
+            while (self.Ii == self.IIi) and (self.IIi == self.IIIi):
+                print("entre Ii: ", self.Ii, " IIi: ", self.IIi, " IIIi: ", self.IIIi)
+                self.Ii = (randint(0, self.sizeM - 1))
+                self.Ij = (randint(0, self.sizeM - 1))
+
+                self.IIi = (randint(0, self.sizeM - 1))
+                self.IIj = (randint(0, self.sizeM - 1))
+
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+
+
+
+            self.matriz[self.Ii][self.Ij] = 1
+            self.matriz[self.IIi][self.IIj] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+
+
+
+        if self.level == 3:
+            self.Ii = (randint(0, self.sizeM - 1))
+            self.Ij = (randint(0, self.sizeM - 1))
+            self.IIi = (randint(0, self.sizeM - 1))
+            self.IIj = (randint(0, self.sizeM - 1))
+            self.IIIi = (randint(0, self.sizeM - 1))
+            self.IIIj = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.Ii][self.Ij] = 1#actor 1
+            self.matriz[self.IIi][self.IIj] = 2#tapa 1
+            self.matriz[self.IIIi][self.IIIj] = 3#pozo
+
+
+            self.Ii2 = (randint(0, self.sizeM - 1))
+            self.Ij2 = (randint(0, self.sizeM - 1))
+            self.IIi2 = (randint(0, self.sizeM - 1))
+            self.IIj2 = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.Ii2][self.Ij2] = 4#actor 2
+            self.matriz[self.IIi2][self.IIj2] = 5#tapa 2
+            self.ban1=0
+            self.ban2=0
+            self.indice = 1
+            self.indice2 = 4
+
+        self.level3()
+
+
+
+    def mono1tapa1(self):
+
+        while self.Ii != self.IIi:
+
+            self.cont = self.cont + 1
+
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+
+
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ii > self.IIi:
+                self.Ii = self.Ii - 1
+            else:
+                self.Ii = self.Ii + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.IIi][self.IIj] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi2][self.IIj2] = 5  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+
+        while self.Ij != self.IIj:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+
+            if self.Ij > self.IIj:
+                self.Ij = self.Ij - 1
+            else:
+                self.Ij = self.Ij + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.IIi][self.IIj] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi2][self.IIj2] = 5  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+        self.indice=12
+        self.matriz[self.Ii][self.Ij] = self.indice
+        self.imprimir()
+
+
+    def mono1tapa2(self):
+
+        while self.Ii != self.IIi2:
+
+            self.cont = self.cont + 1
+
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ii > self.IIi2:
+                self.Ii = self.Ii - 1
+            else:
+                self.Ii = self.Ii + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.IIi2][self.IIj2] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi2][self.IIj2] = 5  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+
+        while self.Ij != self.IIj2:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+
+            if self.Ij > self.IIj2:
+                self.Ij = self.Ij - 1
+            else:
+                self.Ij = self.Ij + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.IIi2][self.IIj2] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi2][self.IIj2] = 5  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+        self.indice=15
+        self.matriz[self.Ii][self.Ij] = self.indice
+        self.imprimir()
+
+    def mono2tapa2(self):
+
+        while self.Ii2 != self.IIi2:
+
+            self.cont = self.cont + 1
+
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii2][self.Ij2] = 0
+            if self.Ii2 > self.IIi2:
+                self.Ii2 = self.Ii2 - 1
+            else:
+                self.Ii2 = self.Ii2 + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.IIi][self.IIj] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi2][self.IIj2] = 5  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+
+        while self.Ij2 != self.IIj2:
+            self.cont = self.cont + 1
+
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii2][self.Ij2] = 0
+
+            if self.Ij2 > self.IIj2:
+                self.Ij2 = self.Ij2 - 1
+            else:
+                self.Ij2 = self.Ij2 + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+
+            self.matriz[self.IIi][self.IIj] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi2][self.IIj2] = 5  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+        self.indice2=45
+        self.matriz[self.Ii2][self.Ij2] = self.indice2
+        self.imprimir()
+
+    def mono2tapa1(self):
+
+        while self.Ii2 != self.IIi:
+
+            self.cont = self.cont + 1
+
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii2][self.Ij2] = 0
+            if self.Ii2 > self.IIi:
+                self.Ii2 = self.Ii2 - 1
+            else:
+                self.Ii2 = self.Ii2 + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+            self.matriz[self.IIi][self.IIj] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi][self.IIj] = 2  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+
+        while self.Ij2 != self.IIj:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii2][self.Ij2] = 0
+
+            if self.Ij2 > self.IIj:
+                self.Ij2 = self.Ij2 - 1
+            else:
+                self.Ij2 = self.Ij2 + 1
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+
+
+            self.matriz[self.IIi][self.IIj] = 2
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.IIi][self.IIj] = 2  # tapa 2
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+        self.indice2=42
+        self.matriz[self.Ii2][self.Ij2] = self.indice2
+        self.imprimir()
+
+
+    def al_pozoLb1(self):
+
+        while self.Ii != self.IIIi:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono y:", self.Ii+1, " x:", self.Ij+1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ii > self.IIIi:
+                self.Ii = self.Ii - 1
+            else:
+                self.Ii = self.Ii + 1
+
+            if self.cont == self.pazos:
+                self.cont = 0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+                self.al_pozobASE()
+
+
+
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+
+        while self.Ij != self.IIIj:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ij > self.IIIj:
+                self.Ij = self.Ij - 1
+            else:
+                self.Ij = self.Ij + 1
+
+
+            if self.cont == self.pazos:
+                self.cont = 0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+                self.al_pozobASE()
+
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.Ii][self.Ij] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+        print("final del mono 1")
+        self.ban1=1
+
+        self.matriz[self.Ii][self.Ij] = 3
+
+
+
+
+    def al_pozoLb2(self):
+
+        while self.Ii2 != self.IIIi:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii2][self.Ij2] = 0
+            if self.Ii2 > self.IIIi:
+                self.Ii2 = self.Ii2 - 1
+            else:
+                self.Ii2 = self.Ii2 + 1
+            if self.cont == self.pazos:
+                self.cont = 0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+                self.al_pozobASE()
+
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.Ii2][self.Ij2] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+
+        while self.Ij2 != self.IIIj:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+            print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+            print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+            print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii2][self.Ij2] = 0
+            if self.Ij2 > self.IIIj:
+                self.Ij2 = self.Ij2 - 1
+            else:
+                self.Ij2 = self.Ij2 + 1
+
+            if self.cont == self.pazos:
+                self.cont = 0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+                self.al_pozobASE()
+
+            self.matriz[self.IIIi][self.IIIj] = 3
+            self.matriz[self.Ii2][self.Ij2] = self.indice
+            self.matriz[self.Ii2][self.Ij2] = self.indice2  # actor 2
+            self.imprimir()
+        print("final del mono 2")
+        self.ban2=1
+        self.matriz[self.Ii2][self.Ij2] = 3
+
+
+
+    def al_pozobASE(self):
+        # actor 1
+
+        self.con = 0
+        while (self.Ii + self.con) != self.IIIi:
+            if (self.Ii + self.con) > self.IIIi:
+                self.con = self.con - 1
+            else:
+                self.con = self.con + 1
+
+        self.con2 = 0
+        while (self.Ij + self.con2) != self.IIIj:
+            if (self.Ij + self.con2) > self.IIIj:
+                self.con2 = self.con2 - 1
+            else:
+                self.con2 = self.con2 + 1
+
+        vofp1 = (abs(self.con)) + (abs(self.con2))
+        print("AL POZO vofp1: ", vofp1)
+        # actor 2
+        self.con = 0
+        while (self.Ii2 + self.con) != self.IIIi:
+            if (self.Ii2 + self.con) > self.IIIi:
+                self.con = self.con - 1
+            else:
+                self.con = self.con + 1
+
+        self.con2 = 0
+        while (self.Ij2 + self.con2) != self.IIIj:
+            if (self.Ij2 + self.con2) > self.IIIj:
+                self.con2 = self.con2 - 1
+            else:
+                self.con2 = self.con2 + 1
+
+        vofp2 = (abs(self.con)) + (abs(self.con2))
+        print("AL POZO vofp2: ", vofp2)
+
+        print("cont: ", self.cont)
+        print("mono1 Ii:", self.Ii+1, " Ij:", self.Ij+1)
+        print("tapa1 IIi:", self.IIi + 1, " IIj:", self.IIj + 1)
+
+        print("mono2 Ii2:", self.Ii2+1, " Ij2:", self.Ij2+1)
+        print("tapa2 IIi2:", self.IIi2 + 1, " IIj2:", self.IIj2 + 1)
+
+        print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+
+
+    def level3(self):
+
+        self.imprimir()
+        #difinir quien va por su tapa primero por la tapa
+        #actor 1
+        self.con=0
+        while (self.Ii+self.con) != self.IIi:
+            if (self.Ii+self.con) > self.IIi:
+                self.con=self.con-1
+            else:
+                self.con=self.con+1
+
+
+        self.con2=0
+        while (self.Ij+self.con2) != self.IIj:
+            if (self.Ij+self.con2) > self.IIj:
+                self.con2= self.con2-1
+            else:
+                self.con2 = self.con2 + 1
+
+        n1ay1=(abs(self.con))+(abs(self.con2))
+        print("n1ay1: ",n1ay1)
+        #---------------------------------------------------------------
+        self.con=0
+        while (self.Ii+self.con) != self.IIi2:
+            if (self.Ii+self.con) > self.IIi2:
+                self.con=self.con-1
+            else:
+                self.con=self.con+1
+
+
+        self.con2=0
+        while (self.Ij+self.con2) != self.IIj2:
+            if (self.Ij+self.con2) > self.IIj2:
+                self.con2= self.con2-1
+            else:
+                self.con2 = self.con2 + 1
+
+        n1ay2=(abs(self.con))+(abs(self.con2))
+        print("n1ay2: ",n1ay2)
+
+        #---------------------------------------------------------------
+        #actor 2
+        self.con=0
+        while (self.Ii2+self.con) != self.IIi2:
+            if (self.Ii2+self.con) > self.IIi2:
+                self.con=self.con-1
+            else:
+                self.con=self.con+1
+
+
+        self.con2=0
+        while (self.Ij2+self.con2) != self.IIj2:
+            if (self.Ij2+self.con2) > self.IIj2:
+                self.con2= self.con2-1
+            else:
+                self.con2 = self.con2 + 1
+
+
+        n2ay2=(abs(self.con))+(abs(self.con2))
+        print("n2ay2: ",n2ay2)
+        #------------------------------------------------------------
+        # actor 2
+        self.con = 0
+        while (self.Ii2 + self.con) != self.IIi:
+            if (self.Ii2 + self.con) > self.IIi:
+                self.con = self.con - 1
+            else:
+                self.con = self.con + 1
+
+        self.con2 = 0
+        while (self.Ij2 + self.con2) != self.IIj:
+            if (self.Ij2 + self.con2) > self.IIj:
+                self.con2 = self.con2 - 1
+            else:
+                self.con2 = self.con2 + 1
+
+        n2ay1 = (abs(self.con)) + (abs(self.con2))
+        print("n2ay1: ",n2ay1)
+        #------------------------------------------------------------
+        var1=0
+        var2=0
+
+
+        if n1ay1 < n1ay2:
+            name1="n1ay1"
+            var1=n1ay1
+        else:
+            name1="n1ay2"
+            var1 = n1ay2
+
+        if n2ay2 < n2ay1:
+            name2 = "n2ay2"
+            var2 = n2ay2
+        else:
+            name2 = "n2ay1"
+            var2 = n2ay1
+
+        if var1<var2:
+            print("el menor es de mono1 a llave ",name1)
+            name3=name1
+        else:
+            print("el menor es ", name2)
+            name3 = name2
+
+        if name3=="n1ay1":
+            self.mono1tapa1()
+            self.mono2tapa2()
+        if name3=="n1ay2":
+            self.mono1tapa2()
+            self.mono2tapa1()
+        if name3=="n2ay2":
+            self.mono2tapa2()
+            self.mono1tapa1()
+        if name3=="n2ay1":
+            self.mono2tapa1()
+            self.mono1tapa2()
+
+
+
+
+
+        #calcular quien va primero por la tapa
+        print("/////////////////////////////////////////////////////////////////////////////////////////////////")
+
+        self.al_pozobASE()
+
+
+    def level2(self):
+
+        self.imprimir()
+        # camino hacia la tapa
+        while self.Ii != self.IIi:
+
+            self.cont = self.cont + 1
+
+            print("cont: ", self.cont)
+            print("mono y:", self.Ii+1, " x:", self.Ij+1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ii > self.IIi:
+                self.Ii = self.Ii - 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+            else:
+                self.Ii = self.Ii + 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+
+            self.imprimir()
+        while self.Ij != self.IIj:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono y:", self.Ii+1, " x:", self.Ij+1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+
+            if self.Ij > self.IIj:
+                self.Ij = self.Ij - 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+            else:
+                self.Ij = self.Ij + 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+
+            if self.cont==self.pazos:
+                self.cont=0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+
+            self.imprimir()
+        print ("encontre la tapa")
+        # camino hacia el pozo
+
+        self.al_pozo()
+
+        self.matriz[self.Ii][self.Ij] = 123
+        self.imprimir()
+
+    def al_pozo(self):
+        print("entre a pozo")
+        while self.Ii != self.IIIi:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono y:", self.Ii+1, " x:", self.Ij+1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ii > self.IIIi:
+                self.Ii = self.Ii - 1
+                self.matriz[self.Ii][self.Ij] = 12
+            else:
+                self.Ii = self.Ii + 1
+                self.matriz[self.Ii][self.Ij] = 12
+
+            if self.cont == self.pazos:
+                self.cont = 0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+
+            self.imprimir()
+
+        while self.Ij != self.IIIj:
+
+            self.cont = self.cont + 1
+            print("cont: ", self.cont)
+            print("mono y:", self.Ii+1, " x:", self.Ij+1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ij > self.IIIj:
+                self.Ij = self.Ij - 1
+                self.matriz[self.Ii][self.Ij] = 12
+            else:
+                self.Ij = self.Ij + 1
+                self.matriz[self.Ii][self.Ij] = 12
+
+            if self.cont == self.pazos:
+                self.cont = 0
+                self.matriz[self.IIIi][self.IIIj] = 0
+                self.IIIi = (randint(0, self.sizeM - 1))
+                self.IIIj = (randint(0, self.sizeM - 1))
+                self.matriz[self.IIIi][self.IIIj] = 3
+            self.imprimir()
+        if (self.Ij == self.IIIj) and (self.Ii == self.IIIi):
+
+            print("se supone que ya conecto bien")
+
+        else:
+            print("entre a el else pozo")
+            self.al_pozo()
+
+
+    def level1(self):
+
+        self.imprimir()
+        # camino hacia la tapa
+        while self.Ii != self.IIi:
+            print("mono y:", self.Ii + 1, " x:", self.Ij + 1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ii > self.IIi:
+                self.Ii = self.Ii - 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+            else:
+                self.Ii = self.Ii + 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+            self.imprimir()
+        while self.Ij != self.IIj:
+            print("mono y:", self.Ii + 1, " x:", self.Ij + 1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+
+            if self.Ij > self.IIj:
+                self.Ij = self.Ij - 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+            else:
+                self.Ij = self.Ij + 1
+                self.matriz[self.Ii][self.Ij] = 1
+                self.matriz[self.IIi][self.IIj] = 2
+                self.matriz[self.IIIi][self.IIIj] = 3
+            self.imprimir()
+        # camino hacia el pozo
+        while self.Ii != self.IIIi:
+            print("mono y:", self.Ii + 1, " x:", self.Ij + 1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ii > self.IIIi:
+                self.Ii = self.Ii - 1
+                self.matriz[self.Ii][self.Ij] = 12
+                self.matriz[self.IIIi][self.IIIj] = 3
+            else:
+                self.Ii = self.Ii + 1
+                self.matriz[self.Ii][self.Ij] = 12
+                self.matriz[self.IIIi][self.IIIj] = 3
+            self.imprimir()
+
+        while self.Ij != self.IIIj:
+            print("mono y:", self.Ii + 1, " x:", self.Ij + 1)
+            print("tapa y:", self.IIi + 1, " x:", self.IIj + 1)
+            print("pozo y:", self.IIIi + 1, " x:", self.IIIj + 1)
+
+            self.matriz[self.Ii][self.Ij] = 0
+            if self.Ij > self.IIIj:
+                self.Ij = self.Ij - 1
+                self.matriz[self.Ii][self.Ij] = 12
+                self.matriz[self.IIIi][self.IIIj] = 3
+            else:
+                self.Ij = self.Ij + 1
+                self.matriz[self.Ii][self.Ij] = 12
+                self.matriz[self.IIIi][self.IIIj] = 3
+            self.imprimir()
+        self.matriz[self.Ii][self.Ij] = 123
+        self.imprimir()
+
+    def imprimir(self):
+        for k in self.matriz:
+            for j in k:
+                print (j, end=" ")
+            print (" ")
+        print("-----------------------")
+logico()
